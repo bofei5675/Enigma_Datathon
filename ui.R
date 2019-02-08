@@ -7,72 +7,37 @@ header <-shinydashboard::dashboardHeader(title = "NetworkTool",
 sideBar <-shinydashboard::dashboardSidebar(
   shinydashboard::sidebarMenu(
     shinydashboard::menuItem(
-      "About",
-      tabName = "About",
+      "Customer_Feedback",
+      tabName = "Customer_Feedback",
       icon = icon("fa fa-superpowers")
     ),
     shinydashboard::menuItem(
-      'Function1',
-      tabName = 'network',
+      'Entertainment',
+      tabName = 'Entertainment',
       icon = icon('fa fa-superpowers')
     ),
     width = 350)
 )
 
-about <- shinydashboard::tabItem(
-  tabName = 'About',
+customer_feedback <- shinydashboard::tabItem(
+  tabName = 'Customer_Feedback',
   shinydashboard::box(
     width = 12,
     HTML('<h1>Some Introduction Text</h1>')
   )
 )
 
-func1 <- shinydashboard::tabItem(
-  tabName = 'network',
+entertainment <- shinydashboard::tabItem(
+  tabName = 'Entertainment',
   shinydashboard::box(
-    width = 12,
-    shiny::fluidRow(
-      shiny::column(
-        width = 6,
-        HTML('<div>'),
-        HTML('<h3>Upload SIF file if you have</h3>'),
-        shiny::fileInput('species1',label = 'Input the first species sif file'),
-        shiny::selectInput('sifFileType',label = 'Select your file types',
-                           c('Multinetwork','Homology')),
-        shiny::actionButton(inputId = 'uploadNetwork',label = 'Upload'),
-        HTML('</div>')
-      ),
-      shiny::column(
-        width = 6,
-        HTML('<div><h3> Select the database:</h3>'),
-        shiny::uiOutput('sqliteDatabaseSelect'),
-        shiny::actionButton('showDatabase',label = 'Show'),
-        HTML('</div>')
-      )
-    )
-  ),
-  shinydashboard::box(
-    width = 12,
-    shiny::column(
-      width = 4,
-      shiny::dataTableOutput('visDatabase1')
-    ),
-    shiny::column(
-      width = 4,
-      shiny::dataTableOutput('visDatabase2')
-    ),
-    shiny::column(
-      width = 4,
-      shiny::dataTableOutput('visDatabase3')
-    )
-  )
+    width = 12)
 )
 
 
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    about,
-    func1
+    customer_feedback,
+    entertainment
   )
 ) 
 

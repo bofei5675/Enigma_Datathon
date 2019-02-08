@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(plotly)
 header <-shinydashboard::dashboardHeader(title = "NetworkTool", 
                                          titleWidth = 230
 )
@@ -23,7 +24,18 @@ customer_feedback <- shinydashboard::tabItem(
   tabName = 'Customer_Feedback',
   shinydashboard::box(
     width = 12,
-    HTML('<h1>Some Introduction Text</h1>')
+    shiny::fluidRow(
+      column(
+        width = 4,
+        shiny::uiOutput('selectLine'),
+        plotly::plotlyOutput('complainRatio')
+       ),
+      column(
+        width = 4,
+        plotly::plotlyOutput('complainType')
+      )
+    )
+    
   )
 )
 

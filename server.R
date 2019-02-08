@@ -1,10 +1,11 @@
 source('helper.R')
+library(dplyr)
 server <- function(input, output, session) {
   session$onSessionEnded(function(){
     shiny::stopApp()
   })
   
-  customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
+  
   
   output$selectLine <- renderUI({
     
@@ -16,6 +17,7 @@ server <- function(input, output, session) {
     
   })
   output$complainRatio <- plotly::renderPlotly({
+    customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
     options <- input$selectLineInput
     
     isolate({
@@ -49,7 +51,7 @@ server <- function(input, output, session) {
   
   output$complainType <- plotly::renderPlotly({
     options <- input$selectLineInput
-    
+    customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
     isolate({
       if(options != 'ALL'){
         data <- customer_data[customer_data$id == options,]
@@ -81,6 +83,27 @@ server <- function(input, output, session) {
     })
   })
   
+  output$subjectDetail <- shiny::renderDataTable({
+    options <- input$selectLineInput
+    customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
+    isolate({
+      if(options != 'ALL'){
+        data <- customer_data[customer_data$id == options,]
+      } else {
+        data <- customer_data
+      }
+      df <- data[c('Subject_Matter','Subject_Detail')]
+      
+      
+      df <- count(df,Subject_Matter,Subject_Detail)
+      
+      df <- as.data.frame(df)
+      
+      df <- df[order(df$n,decreasing = T),]
+      
+      df[1:10,]
+  })
+  })
     
   
 }

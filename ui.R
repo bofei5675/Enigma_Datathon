@@ -34,6 +34,14 @@ customer_feedback <- shinydashboard::tabItem(
         width = 4,
         plotly::plotlyOutput('complainType')
       )
+    ),
+    shiny::fluidRow(
+      
+      shinydashboard::box(
+        width = 12,
+        HTML('<h1>Subject Detail</h1>'),
+        shiny::dataTableOutput('subjectDetail')
+      )
     )
     
   )

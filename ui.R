@@ -36,21 +36,27 @@ customer_feedback <- shinydashboard::tabItem(
       )
     ),
     shiny::fluidRow(
-      
       shinydashboard::box(
         width = 12,
         HTML('<h1>Subject Detail</h1>'),
         shiny::dataTableOutput('subjectDetail')
       )
+    ),
+    shiny::fluidRow(
+      shinydashboard::box(
+        width = 12,
+        uiOutput('lineComparator')
+      )
     )
-    
   )
 )
 
 entertainment <- shinydashboard::tabItem(
   tabName = 'Entertainment',
   shinydashboard::box(
-    width = 12)
+    width = 12,
+    plotly::plotlyOutput('lineComplains')
+    )
 )
 
 

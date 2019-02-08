@@ -6,7 +6,7 @@ server <- function(input, output, session) {
   })
   
   
-  
+  customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
   output$selectLine <- renderUI({
     
     options <- unique(customer_data$id)
@@ -17,7 +17,7 @@ server <- function(input, output, session) {
     
   })
   output$complainRatio <- plotly::renderPlotly({
-    customer_data <- read.csv('data/customer_review_with_id.csv',stringsAsFactors = FALSE)
+    
     options <- input$selectLineInput
     
     isolate({
@@ -102,8 +102,35 @@ server <- function(input, output, session) {
       df <- df[order(df$n,decreasing = T),]
       
       df[1:10,]
+    })
   })
+  
+  output$lineComparator<- shiny::renderUI({
+    options <- unique(customer_data$Subject_Detail)
+    shiny::selectInput('complainTypeSelector',label = 'Select a complain types:',
+                       choices = options)
   })
     
+  output$subjectDetail <- shiny::renderDataTable({
+    options <- input$complainTypeSelector
+    
+    isolate({
+      if(options != 'ALL'){
+        data <- customer_data[customer_data$Subject_Detail == options,]
+      } else {
+        data <- customer_data
+      }
+      df <- data[c('Branch_Line_Route','Subject_Detail')]
+      
+      
+      df <- count(df,Branch_Line_Route,Subject_Detail)
+      
+      df <- as.data.frame(df)
+      
+      df <- df[order(df$n,decreasing = T),]
+      
+      df[1:10,]
+    })
+  })
   
 }
